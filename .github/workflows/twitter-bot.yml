@@ -2,8 +2,8 @@ name: Run Twitter Bot
 
 on:
   schedule:
-    - cron: '0 9 * * *'  # This runs every day at 9:00 AM UTC (adjust as needed)
-  workflow_dispatch:  # This allows you to manually trigger the workflow
+    - cron: '0 9 * * *'  # Runs every day at 9 AM UTC (adjust as needed)
+  workflow_dispatch:  # Allows you to manually trigger the workflow
 
 jobs:
   run-bot:
@@ -20,7 +20,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt  # Install dependencies from requirements.txt
+          pip install -r requirements.txt
 
       - name: Run the bot
         run: |
