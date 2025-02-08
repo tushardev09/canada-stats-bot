@@ -78,8 +78,9 @@ auth = tweepy.OAuth1UserHandler
 api = tweepy.API(auth)
 
 # Post the tweet with the fetched data
+tweet_data = "Hello, world! This is my first tweet from the bot!"
 try:
     api.update_status(tweet_data)
     print("Tweet posted successfully!")
-except tweepy.TweepError as e:
+except tweepy.Exception as e:
     print(f"Error posting tweet: {e}")
