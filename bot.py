@@ -29,3 +29,22 @@ response = client.create_tweet(text=tweet_text)
 
 # Print the tweet confirmation
 print(f"Successfully posted tweet: {response.data['text']}")
+
+import random
+
+# List of tweet variations
+tweet_variations = [
+    "📊 Canada’s latest population: 40.5M people 🇨🇦 #CanadaStats #PopulationGrowth",
+    "🇨🇦 Did you know? Canada’s population has hit 40.5M in 2024! 📊 #CanadaStats #PopulationGrowth",
+    "📈 Canada’s population is growing fast! 40.5M people in 2024 🇨🇦 #CanadaStats #PopulationGrowth"
+]
+
+# Select a random tweet from the variations list
+tweet_text = random.choice(tweet_variations)
+
+# Create and post the tweet
+response = client.create_tweet(text=tweet_text)
+
+# Print the tweet confirmation
+print(f"Successfully posted tweet: {response.data['text']}")
+
