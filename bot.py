@@ -1,50 +1,56 @@
-import os
-import tweepy
+import requests
+import random
 from dotenv import load_dotenv
+import tweepy
 
 # Load environment variables
 load_dotenv()
 
-# Load Twitter API credentials from .env
-API_KEY = os.getenv("API_KEY")
-API_SECRET = os.getenv("API_SECRET")
-ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
-ACCESS_SECRET = os.getenv("ACCESS_SECRET")
-BEARER_TOKEN = os.getenv("BEARER_TOKEN")  # Add your Bearer Token here
-
-# Authenticate using Twitter API v2
+# Set up your Tweepy client
 client = tweepy.Client(
-    bearer_token=BEARER_TOKEN,  # Use Bearer Token for v2 authentication
-    consumer_key=API_KEY,
-    consumer_secret=API_SECRET,
-    access_token=ACCESS_TOKEN,
-    access_token_secret=ACCESS_SECRET
+    bearer_token=os.getenv("BEARER_TOKEN"),
+    consumer_key=os.getenv("API_KEY"),
+    consumer_secret=os.getenv("API_SECRET"),
+    access_token=os.getenv("ACCESS_TOKEN"),
+    access_token_secret=os.getenv("ACCESS_SECRET"),
 )
 
-# Create a tweet
-tweet_text = "📊 Canada’s latest population: 40.5M people 🇨🇦 #CanadaStats #PopulationGrowth"
+# Define a function to fetch data from Statistics Canada API
+def fetch_canada_stats():
+    # API endpoint for Statistics Canada (replace with the actual endpoint you're using)
+    url = "https://www150.statcan.gc.ca/t1/wds/rest/getData"
+    
+    # Example query parameters (you need to replace with real parameters based on the API you are using)
+    params = {
+        'product': '14-10-0023',  # This is an example. Replace with actual product code
+        'language': 'en'
+    }
+    
+    # Fetch the data from the API
+    response = requests.get(url, params=params)
+    
+    # Handle the response
+    if response.status_code == 200:
+        data = response.json()  # Assuming the response is in JSON format
+        
+        # Extract the relevant data
+        # (This depends on the specific API, so adjust this part based on the API response structure)
+        population_data = data.get("data", {}).get("population", "No data available")
+        
+        # Create tweet text
+        tweet_text = f"📊 Canada's population in 2024: {population_data} people 🇨🇦 #CanadaStats #PopulationGrowth"
+        
+        return tweet_text
+    else:
+        return "Sorry, could not retrieve the data. Please try again later."
 
-# Post the tweet using v2 (create_tweet method)
+# Fetch the data
+tweet_text = fetch_canada_stats()
+
+# Post the tweet
 response = client.create_tweet(text=tweet_text)
 
 # Print the tweet confirmation
 print(f"Successfully posted tweet: {response.data['text']}")
 
-import random
-
-# List of tweet variations
-tweet_variations = [
-    "📊 Canada’s latest population: 40.5M people 🇨🇦 #CanadaStats #PopulationGrowth",
-    "🇨🇦 Did you know? Canada’s population has hit 40.5M in 2024! 📊 #CanadaStats #PopulationGrowth",
-    "📈 Canada’s population is growing fast! 40.5M people in 2024 🇨🇦 #CanadaStats #PopulationGrowth"
-]
-
-# Select a random tweet from the variations list
-tweet_text = random.choice(tweet_variations)
-
-# Create and post the tweet
-response = client.create_tweet(text=tweet_text)
-
-# Print the tweet confirmation
-print(f"Successfully posted tweet: {response.data['text']}")
 
