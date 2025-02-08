@@ -2,7 +2,7 @@ import requests
 import os
 import tweepy
 import xml.etree.ElementTree as ET
-import json
+
 
 # Statistics Canada SDMX API endpoint and parameters
 base_url = 'https://www150.statcan.gc.ca/t1/wds/rest/'
@@ -10,8 +10,8 @@ base_url = 'https://www150.statcan.gc.ca/t1/wds/rest/'
 # Define the parameters for your query (replace with correct parameters)
 params = {
     'startPeriod': '2010',
-    'endPeriod': '2020',
-    'detail': '1'
+    'endPeriod': '2024',
+    'detail': 'full'
 }
 
 # Fetch data from the Statistics Canada API
