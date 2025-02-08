@@ -16,11 +16,27 @@ response = requests.get(base_url, params=params)
 
 # Check if the request was successful
 if response.status_code == 200:
-    data = response.json()  # Parse JSON data
-    print("Data fetched successfully.")
+    try:
+        data = response.json()  # Try to parse JSON data
+        print("Data fetched successfully.")
+    except ValueError:
+        print("Error: Response is not in JSON format.")
+        print("Response content:", response.text)
+        exit(1)
 else:
     print(f"Error: {response.status_code} - {response.text}")
     exit(1)
+
+/ # Fetch data from the Statistics Canada API
+# response = requests.get(base_url, params=params)
+
+# Check if the request was successful
+#if response.status_code == 200:
+ #   data = response.json()  # Parse JSON data
+  #  print("Data fetched successfully.")
+#else:
+ #   print(f"Error: {response.status_code} - {response.text}")
+  #  exit(1) /
 
 # Process the data (example, extract specific details to tweet)
 # This part needs to be adjusted according to the exact structure of the data
