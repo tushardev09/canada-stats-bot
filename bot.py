@@ -11,7 +11,7 @@ base_url = 'https://www150.statcan.gc.ca/t1/wds/sdmx/statcan/rest/data/DF_171000
 params = {
     'startPeriod': '2010',
     'endPeriod': '2024',
-    'detail': 'full'
+    'detail': '1'
 }
 
 # Fetch data from the Statistics Canada API
