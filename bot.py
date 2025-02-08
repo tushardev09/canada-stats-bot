@@ -1,27 +1,31 @@
-import tweepy
-import random
 import os
+import tweepy
+from dotenv import load_dotenv
 
-# Twitter API authentication (retrieved from GitHub Secrets)
+# Load environment variables
+load_dotenv()
+
+# Load Twitter API credentials from .env
 API_KEY = os.getenv("API_KEY")
 API_SECRET = os.getenv("API_SECRET")
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 ACCESS_SECRET = os.getenv("ACCESS_SECRET")
-BEARER_TOKEN = os.getenv("ACCESS_BEARER")
-# Authenticate with Twitter
-auth = tweepy.OAuth1UserHandler(API_KEY, API_SECRET, ACCESS_TOKEN, ACCESS_SECRET)
-api = tweepy.API(auth)
+BEARER_TOKEN = os.getenv("BEARER_TOKEN")  # Add your Bearer Token here
 
-# Example tweets (replace with real data fetching logic)
-tweets = [
-    "Canada’s population is now 40.5 million, growing faster than most G7 nations! 🇨🇦 #CanadaStats",
-    "Did you know? 67% of Canada’s electricity came from renewable sources in 2023! ⚡🌱 #CleanEnergy",
-    "The Canadian economy grew by 2.3% in 2023! 📈💰 #CDNeconomy #CanadaStats",
-]
+# Authenticate using Twitter API v2
+client = tweepy.Client(
+    bearer_token=BEARER_TOKEN,  # Use Bearer Token for v2 authentication
+    consumer_key=API_KEY,
+    consumer_secret=API_SECRET,
+    access_token=ACCESS_TOKEN,
+    access_token_secret=ACCESS_SECRET
+)
 
-# Select a random tweet
-tweet = random.choice(tweets)
+# Create a tweet
+tweet_text = "📊 Canada’s latest population: 40.5M people 🇨🇦 #CanadaStats #PopulationGrowth"
 
-# Post the tweet
-api.update_status(tweet)
-print(f"Tweet posted: {tweet}")
+# Post the tweet using v2 (create_tweet method)
+response = client.create_tweet(text=tweet_text)
+
+# Print the tweet confirmation
+print(f"Successfully posted tweet: {response.data['text']}")
