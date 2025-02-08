@@ -1,29 +1,33 @@
-name: Twitter Bot  
-on:  
-  schedule:  
-    - cron: "0 14 * * *"  # Runs at 9 AM EST (14:00 UTC)  
-    - cron: "0 23 * * *"  # Runs at 6 PM EST (23:00 UTC)  
-  workflow_dispatch:  # Allows manual triggering  
+name: Run Twitter Bot
 
-jobs:  
-  tweet:  
-    runs-on: ubuntu-latest  
-    steps:  
-      - name: Checkout repo  
-        uses: actions/checkout@v3  
+on:
+  schedule:
+    - cron: '0 9 * * *'  # This runs every day at 9:00 AM UTC (adjust as needed)
+  workflow_dispatch:  # This allows you to manually trigger the workflow
 
-      - name: Set up Python  
-        uses: actions/setup-python@v4  
-        with:  
-          python-version: '3.9'  
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
 
-      - name: Install dependencies  
-        run: pip install tweepy  
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Run Twitter bot  
-        env:  
-          API_KEY: ${{ secrets.API_KEY }}  
-          API_SECRET: ${{ secrets.API_SECRET }}  
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}  
-          ACCESS_SECRET: ${{ secrets.ACCESS_SECRET }}  
-        run: python bot.py
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt  # Install dependencies from requirements.txt
+
+      - name: Run the bot
+        run: |
+          python bot.py
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+          API_SECRET: ${{ secrets.API_SECRET }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCESS_SECRET: ${{ secrets.ACCESS_SECRET }}
+          BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
