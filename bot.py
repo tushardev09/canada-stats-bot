@@ -66,13 +66,14 @@ BEARER_TOKEN = os.getenv("BEARER_TOKEN")
 
 
 # Authenticate with Twitter using Tweepy
-lient = tweepy.Client(
+lient = tweepy.OAuth1UserHandler(
     bearer_token=BEARER_TOKEN,  # Use Bearer Token for v2 authentication
     consumer_key=API_KEY,
     consumer_secret=API_SECRET,
     access_token=ACCESS_TOKEN,
     access_token_secret=ACCESS_SECRET
 )
+auth = tweepy.OAuth1UserHandler
 
 api = tweepy.API(auth)
 
