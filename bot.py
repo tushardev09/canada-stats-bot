@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 
 
 # Statistics Canada SDMX API endpoint and parameters
-base_url = 'https://www150.statcan.gc.ca/t1/wds/rest/'
+base_url = 'https://www150.statcan.gc.ca/t1/wds/sdmx/statcan/rest/data/DF_17100005/1.1.1'
 
 # Define the parameters for your query (replace with correct parameters)
 params = {
