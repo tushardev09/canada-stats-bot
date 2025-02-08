@@ -55,22 +55,7 @@ else:
 # You will need to modify this to fit the actual API response structure
 
 # For the sake of this example, let's pretend we're extracting population data
-tweet_data = "Population estimate for Canada from 2010 to 2020:\n"
-try:
-    # Example: Extract relevant data from the response
-    # This part will depend on the actual structure of your response.
-    # Replace with the actual data extraction logic.
-    dataset = data.get('dataSets', [])
-    if dataset:
-        # For example, let's take the first dataset's first series
-        series = dataset[0].get('series', {})
-        for key, value in series.items():
-            # Customize this part to format your data correctly
-            population_value = value.get('value', 'N/A')  # Adjust key according to response structure
-            tweet_data += f"Year: {key}, Population: {population_value}\n"
-except Exception as e:
-    print(f"Error processing data: {e}")
-    exit(1)
+
 
 # Twitter API credentials (You need to create a Twitter Developer account to get these keys)
 API_KEY = os.getenv("API_KEY")
