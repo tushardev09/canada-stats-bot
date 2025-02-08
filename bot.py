@@ -1,14 +1,17 @@
 import requests
 import os
 import tweepy
+import xml.etree.ElementTree as ET
 import json
 
 # Statistics Canada SDMX API endpoint and parameters
-base_url = "https://www150.statcan.gc.ca/t1/wds/sdmx/statcan/rest/data/DF_17100005/1.1.1"  # Adjust URL based on the dataset you need
+base_url = 'https://www150.statcan.gc.ca/t1/wds/rest/'
+
+# Define the parameters for your query (replace with correct parameters)
 params = {
-    'startPeriod': '2010',  # Start period for data
-    'endPeriod': '2020',    # End period for data
-    'detail': 'full'        # Set to 'full' for detailed data
+    'startPeriod': '2010',
+    'endPeriod': '2020',
+    'detail': '1'
 }
 
 # Fetch data from the Statistics Canada API
@@ -17,10 +20,18 @@ response = requests.get(base_url, params=params)
 # Check if the request was successful
 if response.status_code == 200:
     try:
-        data = response.json()  # Try to parse JSON data
+        # Parse the XML response content
+        root = ET.fromstring(response.text)  # Parse XML data
         print("Data fetched successfully.")
-    except ValueError:
-        print("Error: Response is not in JSON format.")
+        
+        # Example: Extract the observation values (you can customize this based on your needs)
+        for obs in root.iter('generic:Obs'):
+            year = obs.find('generic:ObsDimension').attrib['value']
+            value = obs.find('generic:ObsValue').attrib['value']
+            print(f"Year: {year}, Value: {value}")
+        
+    except ET.ParseError as e:
+        print(f"Error parsing XML: {e}")
         print("Response content:", response.text)
         exit(1)
 else:
