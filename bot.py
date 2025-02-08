@@ -82,5 +82,5 @@ tweet_data = "Hello, world! This is my first tweet from the bot!"
 try:
     api.update_status(tweet_data)
     print("Tweet posted successfully!")
-except tweepy.Exception as e:
+except Expectation as e:
     print(f"Error posting tweet: {e}")
