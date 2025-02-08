@@ -27,7 +27,7 @@ else:
     print(f"Error: {response.status_code} - {response.text}")
     exit(1)
 
-/ # Fetch data from the Statistics Canada API
+ # Fetch data from the Statistics Canada API
 # response = requests.get(base_url, params=params)
 
 # Check if the request was successful
